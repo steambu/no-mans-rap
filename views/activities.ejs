@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Activities</title>
+  <!-- CSS -->
+  <link rel="stylesheet" href="/activities.css">
+
+</head>
+
+<body>
+  <%- include('header') %>
+
+    <!-- Activities list -->
+    <h1>Your Activities</h1>
+    <!-- Add activity form -->
+    <form action="/activities" method="post">
+      <input type="text" name="name" placeholder="Activity name" required>
+    
+      <input type="number" name="quantity" placeholder="Quantity or Count" required>
+      <select name="unit">
+        <option value="">Select Unit</option>
+        <option value="seconds">Seconds</option>
+        <option value="minutes">Minutes</option>
+        <option value="hours">Hours</option>
+        <option value="days">Days</option>
+        <option value="amounts_done">Amounts Done</option>
+        <option value="m">Meters</option>
+        <option value="km">Kilometers</option>
+        <!-- Add other units as needed -->
+      </select>
+      <input type="number" name="rap_earned" placeholder="RAP Reward" required>
+      <input type="submit" value="Add activity">
+    </form>
+    <!-- Activities list -->
+    <div class="activities-container">
+      <% activities.forEach((activity)=> { %>
+        <div class="activity-card" data-id="<%= activity.id %>">
+          <h2>
+            <%= activity.name %>
+          </h2>
+          <p>Quantity: <%= activity.quantity %>
+              <%= activity.unit %>
+          </p>
+          <p>RAP Reward: <%= activity.rap_earned %>
+          </p>
+          <p>Activations: <%= activity.activations %>
+          </p>
+          <!-- Delete button form -->
+          <form action="/activities/<%= activity.id %>/delete" method="post">
+            <input type="hidden" name="_method" value="delete">
+            <button type="submit" class="delete-btn">Delete</button>
+          </form>
+
+        </div>
+        <% }); %>
+    </div>
+
+    <script>
+
+      const activityCards = document.querySelectorAll('.activity-card');
+
+      activityCards.forEach(card => {
+          card.addEventListener('click', function (event) {
+            const id = this.dataset.id;
+
+            fetch(`/activities/${id}/activate`, {
+              method: 'POST',
+            })
+              .then(response => response.json())
+              .then(data => {
+                if (data.success) {
+                  // The activation was successful, now let's update the RAP
+                  fetch('/activities/rap')
+                    .then(response => response.json())
+                    .then(data => {
+                      // Update the RAP score in the header
+                      document.querySelector('#rapScore').textContent = 'RAP: ' + data.rap;
+                    });
+                } else {
+                  // The activation failed, show an error message
+                  alert('An error occurred while trying to activate this activity.');
+                }
+              });
+          });
+        });
+
+      const deleteButtons = document.querySelectorAll('.delete-btn');
+
+      deleteButtons.forEach(button => {
+        button.addEventListener('click', function (event) {
+          event.preventDefault();  // stop the form from submitting immediately
+
+          const activityName = this.parentNode.parentNode.querySelector('h2').innerText;
+
+          const isSure = window.confirm(`Are you sure you want to delete ${activityName}?`);
+
+          if (isSure) {
+            const typedName = window.prompt(`Please type the name of the activity to confirm deletion: ${activityName}`);
+
+            if (typedName === activityName) {
+              // If user typed the name correctly, submit the form
+              this.form.submit();
+            } else {
+              alert('The typed name does not match the activity name. The activity was not deleted.');
+            }
+          }
+        });
+      });
+    </script>
+
+
+</body>
+
+</html>
