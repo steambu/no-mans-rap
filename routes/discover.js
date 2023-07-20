@@ -4,6 +4,8 @@ const router = express.Router();
 const db = require("../database.js");
 const fs = require("fs");
 const path = require("path");
+const gaussian = require("gaussian"); // You will need to install this package
+const planetGenerator = require("./planetGenerator"); // hypothetical module for generating planets
 
 router.get("/", (req, res) => {
   db.get("SELECT rap FROM user WHERE name = ?", ["player"], (err, row) => {
@@ -36,59 +38,6 @@ router.get("/", (req, res) => {
   });
 });
 
-// Import JSON Files for Planet Generation
-const planetTypes = JSON.parse(
-  fs.readFileSync(path.resolve(__dirname, "../planetData/planetTypes.json"))
-);
-const resources = JSON.parse(
-  fs.readFileSync(path.resolve(__dirname, "../planetData/planetResources.json"))
-);
-const events = JSON.parse(
-  fs.readFileSync(path.resolve(__dirname, "../planetData/planetEvents.json"))
-);
-
-// PLANET GENERATION
-const gaussian = require("gaussian"); // You will need to install this package
-
-// Function to generate a new planet
-function getRandomElement(arr) {
-  return arr[Math.floor(Math.random() * arr.length)];
-}
-
-// Create a normal distribution with mean 0 and variance 50
-const distribution = gaussian(0, 2500); // 2500 is the square of the standard deviation
-
-function getRandomNormalDistTemp(min, max) {
-  let result;
-  do {
-    result = distribution.ppf(Math.random()); // percent point function (inverse of cdf)
-  } while (result < min || result > max);
-  return parseFloat(result.toFixed(2));
-}
-
-function generatePlanet() {
-  const name = `Planet-${Math.floor(Math.random() * 10000)}`;
-  const type = getRandomElement(planetTypes);
-  const size = getRandomElement([1000, 2000, 3000, 4000]);
-  const temperature = getRandomNormalDistTemp(-200, 200); // Use the new function for temperature
-  const gravity = getRandomElement([0.5, 1, 1.5, 2]);
-  const resource = getRandomElement(resources);
-  const event = getRandomElement(events);
-  const perfectness =
-    type.perfectness + resource.perfectness + event.perfectness;
-
-  return {
-    name,
-    type: type.name,
-    size,
-    temperature,
-    gravity,
-    resource: resource.name,
-    event: event.name,
-    perfectness,
-  };
-}
-
 // Discover Planet and add to database
 router.post("/", (req, res) => {
   db.get("SELECT rap FROM user WHERE name = ?", ["player"], (err, row) => {
@@ -109,7 +58,7 @@ router.post("/", (req, res) => {
           if (this.changes === 0) {
             res.redirect("/discover");
           } else {
-            const newPlanet = generatePlanet();
+            const newPlanet = planetGenerator();
             db.run(
               "INSERT INTO planets (name, type, size, temperature, gravity, perfectness) VALUES (?, ?, ?, ?, ?, ?)",
               [

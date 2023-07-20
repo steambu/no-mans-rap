@@ -7,39 +7,20 @@ my-space-game
 ├─ myDatabase.db
 ├─ package-lock.json
 ├─ package.json
-├─ public
-│  ├─ activities.css
-│  └─ discover.css
-├─ routes
-│  ├─ activities.js
-│  └─ discover.js
-├─ server.js
-└─ views
-   ├─ activities.ejs
-   ├─ discover.ejs
-   ├─ header.ejs
-   └─ index.ejs
-
-```
-```
-my-space-game
-├─ createTables.js
-├─ database.js
-├─ FileStructure.md
-├─ myDatabase.db
-├─ package-lock.json
-├─ package.json
 ├─ planetData
 │  ├─ planetEvents.json
 │  ├─ planetResources.json
-│  └─ planetTypes.json
+│  ├─ planetTypes.json
+│  └─ planetTypesPrototype.json
 ├─ public
 │  ├─ activities.css
-│  └─ discover.css
-├─ README.md
+│  ├─ discover.css
+│  └─ images
+│     └─ Tudormorari_a_hyperealistic_pixelated_version_of_the_planet_ura_3c9296de-de79-49f4-8b91-126b8f10fde7.png
 ├─ routes
 │  ├─ activities.js
-│  └─ discover.js
+│  ├─ discover.js
+│  └─ planetGenerator.js
 ├─ server.js
 └─ views
    ├─ activities.ejs
