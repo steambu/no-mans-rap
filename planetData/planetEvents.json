@@ -1,0 +1,158 @@
+[
+  {
+    "name": "Meteor Shower",
+    "perfectness": 1
+  },
+  {
+    "name": "Alien Encounter",
+    "perfectness": 3
+  },
+  {
+    "name": "Quiet Day",
+    "perfectness": 2
+  },
+  {
+    "name": "Discovery Of Ancient Ruins",
+    "perfectness": 3
+  },
+  {
+    "name": "Big Herd Migrations",
+    "perfectness": 8
+  },
+  {
+    "name": "Solar Flares",
+    "perfectness": 3
+  },
+  {
+    "name": "Planetary Alignment",
+    "perfectness": 5
+  },
+  {
+    "name": "Birth of a Star",
+    "perfectness": 10
+  },
+  {
+    "name": "Stellar Eclipse",
+    "perfectness": 2
+  },
+  {
+    "name": "Space-Time Anomaly",
+    "perfectness": -10
+  },
+  {
+    "name": "Nebula Bloom",
+    "perfectness": 7
+  },
+  {
+    "name": "Galactic Storm",
+    "perfectness": -5
+  },
+  {
+    "name": "Cosmic Fair",
+    "perfectness": 6
+  },
+  {
+    "name": "Discovery of New Species",
+    "perfectness": 8
+  },
+  {
+    "name": "Interstellar Festival",
+    "perfectness": 10
+  },
+  {
+    "name": "Quantum Quake",
+    "perfectness": -15
+  },
+  {
+    "name": "Black Hole Event Horizon",
+    "perfectness": -15
+  },
+  {
+    "name": "Birth of a Supernova",
+    "perfectness": 15
+  },
+  {
+    "name": "A Visit from Time Travellers",
+    "perfectness": 10
+  },
+  {
+    "name": "Tectonic Shift",
+    "perfectness": -5
+  },
+  {
+    "name": "Volcanic Eruption",
+    "perfectness": -8
+  },
+  {
+    "name": "Unexpected Oasis",
+    "perfectness": 7
+  },
+  {
+    "name": "Discovery of Subterranean Caves",
+    "perfectness": 6
+  },
+  {
+    "name": "Aurora Lights Spectacle",
+    "perfectness": 3
+  },
+  {
+    "name": "Bioluminescent Bloom",
+    "perfectness": 4
+  },
+  {
+    "name": "Meteorite Impact",
+    "perfectness": -10
+  },
+  {
+    "name": "Resource Abundance",
+    "perfectness": 9
+  },
+  {
+    "name": "Rare Mineral Vein Discovery",
+    "perfectness": 12
+  },
+  {
+    "name": "Radioactive Meltdown",
+    "perfectness": -15
+  },
+  {
+    "name": "New Plant Species Discovery",
+    "perfectness": 5
+  },
+  {
+    "name": "Harmonic Resonance",
+    "perfectness": 10
+  },
+  {
+    "name": "Climate Shift",
+    "perfectness": -7
+  },
+  {
+    "name": "Calm Weather",
+    "perfectness": 2
+  },
+  {
+    "name": "Uncharted Territory",
+    "perfectness": 7
+  },
+  {
+    "name": "Planetary Wildlife Migration",
+    "perfectness": 3
+  },
+  {
+    "name": "Comet Sighting",
+    "perfectness": 6
+  },
+  {
+    "name": "Sudden Gravity Well",
+    "perfectness": -12
+  },
+  {
+    "name": "Bountiful Harvest",
+    "perfectness": 15
+  },
+  {
+    "name": "Fertile Soil Discovery",
+    "perfectness": 10
+  }
+]

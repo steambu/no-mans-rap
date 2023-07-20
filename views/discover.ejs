@@ -6,7 +6,6 @@
   <link rel="stylesheet" href="/discover.css">
 </head>
 
-
 <body>
   <%- include('header') %>
     <h1>Planet Discovery</h1>
@@ -14,6 +13,10 @@
     <form action="/discover" method="post">
       <button type="submit">Discover a new planet for 100 RAP</button>
     </form>
+    <form action="/discover/deletePlanet" method="post">
+      <button type="submit">Delete Last Discovered Planet</button>
+    </form>
+
 
     <% if (planets.length> 0) { %>
       <h2>Discovered Planets</h2>
@@ -28,14 +31,18 @@
             <p>Size: <%= planet.size %> km</p>
             <p>Temperature: <%= planet.temperature %>°C</p>
             <p>Gravity: <%= planet.gravity %> G</p>
+            <p>Resource: <%= planet.resource %>
+            </p>
+            <p>Event: <%= planet.event %>
+            </p>
+            <p>Perfectness: <%= planet.perfectness %>
+            </p>
           </div>
           <% }) %>
       </div>
       <% } else { %>
         <p>No planets discovered yet.</p>
         <% } %>
-
 </body>
-
 
 </html>

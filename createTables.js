@@ -14,7 +14,7 @@ let createUserTable = () => {
         console.log("Error creating user table", err);
         reject(err);
       } else {
-        console.log("Successfully created user table");
+        console.log("Successfully created User table");
 
         // Insert the user data
         db.run(
@@ -25,7 +25,7 @@ let createUserTable = () => {
               console.log("Error inserting user data", err);
               reject(err);
             } else {
-              console.log("Successfully inserted user data");
+              console.log("Successfully inserted User Data");
               resolve(true);
             }
           }
@@ -55,7 +55,7 @@ let createActivitiesTable = () => {
         console.log("Error creating activities table", err);
         reject(err);
       } else {
-        console.log("Successfully created activities table");
+        console.log("Successfully created Activities table");
         resolve(true);
       }
     });
@@ -63,6 +63,7 @@ let createActivitiesTable = () => {
 };
 
 // Create Planets Table
+
 let createPlanetsTable = () => {
   const query = `
     CREATE TABLE IF NOT EXISTS planets (
@@ -72,6 +73,7 @@ let createPlanetsTable = () => {
       size INTEGER NOT NULL,
       temperature INTEGER NOT NULL,
       gravity REAL NOT NULL,
+      perfectness REAL NOT NULL,
       discovered_on TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     )
   `;
@@ -82,7 +84,53 @@ let createPlanetsTable = () => {
         console.log("Error creating planets table", err);
         reject(err);
       } else {
-        console.log("Successfully created planets table");
+        console.log("Successfully created Planets table");
+        resolve(true);
+      }
+    });
+  });
+};
+
+let createPlanetResourcesTable = () => {
+  const query = `
+    CREATE TABLE IF NOT EXISTS planet_resources (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      planet_id INTEGER,
+      resource TEXT NOT NULL,
+      FOREIGN KEY (planet_id) REFERENCES planets (id)
+    )
+  `;
+
+  return new Promise((resolve, reject) => {
+    db.run(query, (err) => {
+      if (err) {
+        console.log("Error creating planets table", err);
+        reject(err);
+      } else {
+        console.log("Successfully created Planet Resources table");
+        resolve(true);
+      }
+    });
+  });
+};
+
+let createPlanetEventsTable = () => {
+  const query = `
+    CREATE TABLE IF NOT EXISTS planet_events (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      planet_id INTEGER,
+      event TEXT NOT NULL,
+      FOREIGN KEY (planet_id) REFERENCES planets (id)
+    )
+  `;
+
+  return new Promise((resolve, reject) => {
+    db.run(query, (err) => {
+      if (err) {
+        console.log("Error creating planets table", err);
+        reject(err);
+      } else {
+        console.log("Successfully created Planet Events table");
         resolve(true);
       }
     });
@@ -93,5 +141,7 @@ module.exports = function() {
   return createUserTable()
     .then(createActivitiesTable)
     .then(createPlanetsTable)
+    .then(createPlanetResourcesTable)
+    .then(createPlanetEventsTable)
     .catch(console.error);
 };
