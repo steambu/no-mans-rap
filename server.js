@@ -20,8 +20,17 @@ app.use("/discover", discoverRoutes);
 app.use("/log", logRoutes); // Add this line
 
 // HOME PAGE
+// Import your database
+const { db } = require("./database.js");
+
+// HOME PAGE
 app.get("/", (req, res) => {
-  res.render("index", { rap: res.locals.rap });
+  db.get("SELECT rap FROM user WHERE name = ?", ["player"], (err, row) => {
+    if (err) {
+      return console.error(err.message);
+    }
+    res.render("index", { rap: row.rap });
+  });
 });
 
 // Start server

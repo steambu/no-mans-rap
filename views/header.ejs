@@ -1,8 +1,12 @@
-<nav>
-  <h3 id="rapScore">RAP: <%= rap %></h3>
+<link rel="stylesheet" href="/header.css">
 
-  <a href="/">Home</a> |
-  <a href="/activities">Activities</a> |
-  <a href="/discover">Discover</a> |
-  <a href="/log">Log</a> |
+<nav>
+  <div>
+    <a href="/">Home</a> |
+    <a href="/activities">Activities</a> |
+    <a href="/discover">Discover</a> |
+    <a href="/log">Log</a> |
+  </div>
+  <h3 id="rapScore">RAP: <%= rap.toLocaleString() %>
+  </h3>
 </nav>

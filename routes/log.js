@@ -23,17 +23,14 @@ router.get("/", async (req, res) => {
     let coldestPlanet = await getPlanet(
       "SELECT * FROM planets ORDER BY temperature ASC LIMIT 1"
     );
-    console.log("Coldest Planet:", coldestPlanet);
 
     let hottestPlanet = await getPlanet(
       "SELECT * FROM planets ORDER BY temperature DESC LIMIT 1"
     );
-    console.log("Hottest Planet:", hottestPlanet);
 
     let biggestPlanet = await getPlanet(
       "SELECT * FROM planets ORDER BY size DESC LIMIT 1"
     );
-    console.log("Biggest Planet:", biggestPlanet);
 
     // Render the log page
     res.render("log", { coldestPlanet, hottestPlanet, biggestPlanet, rap });
