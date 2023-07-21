@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Planet Log</title>
+  <link rel="stylesheet" href="/log.css">
+</head>
+
+<body>
+  <%- include('header') %>
+    <h1>Planet Log</h1>
+    <h2>Coldest Planet</h2>
+    <p>Name: <%= coldestPlanet.name %>
+    </p>
+    <p>Temperature: <%= coldestPlanet.temperature %>
+    </p>
+    <!-- Add other properties here -->
+
+    <h2>Hottest Planet</h2>
+    <p>Name: <%= hottestPlanet.name %>
+    </p>
+    <p>Temperature: <%= hottestPlanet.temperature %>
+    </p>
+    <!-- Add other properties here -->
+
+    <h2>Biggest Planet</h2>
+    <p>Name: <%= biggestPlanet.name %>
+    </p>
+    <p>Size: <%= biggestPlanet.size %>
+    </p>
+    <!-- Add other properties here -->
+</body>
+
+</html>

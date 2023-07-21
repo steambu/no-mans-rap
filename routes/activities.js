@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const db = require("../database");
+const { db, getRapScore } = require("../database.js");
 
 // Add activity
 router.post("/", (req, res) => {

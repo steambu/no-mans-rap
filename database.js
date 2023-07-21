@@ -9,5 +9,18 @@ let db = new sqlite3.Database("./myDatabase.db", (err) => {
   console.log("Connected to the myDatabase database.");
 });
 
-// Export database
-module.exports = db;
+// Function to get the RAP score of a user
+let getRapScore = (name) => {
+  return new Promise((resolve, reject) => {
+    db.get("SELECT rap FROM user WHERE name = ?", [name], (err, row) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(row ? row.rap : null);
+      }
+    });
+  });
+};
+
+// Export database and getRapScore function
+module.exports = { db, getRapScore };

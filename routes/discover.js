@@ -1,10 +1,7 @@
 // Imports
 const express = require("express");
 const router = express.Router();
-const db = require("../database.js");
-const fs = require("fs");
-const path = require("path");
-const gaussian = require("gaussian"); // You will need to install this package
+const { db, getRapScore } = require("../database.js");
 const planetGenerator = require("./planetGenerator"); // hypothetical module for generating planets
 
 router.get("/", (req, res) => {
