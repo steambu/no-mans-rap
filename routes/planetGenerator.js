@@ -4,13 +4,29 @@ const path = require("path");
 const gaussian = require("gaussian");
 
 // Import JSON Files for Planet Generation
-let planetTypes;
+let planetTypes, prefixes, suffixes, biomes, species;
 try {
-  const filePath = path.resolve(__dirname, "../planetData/planetTypes.json");
-  const fileContent = fs.readFileSync(filePath, "utf8");
+  let filePath = path.resolve(__dirname, "../planetData/planetTypes.json");
+  let fileContent = fs.readFileSync(filePath, "utf8");
   planetTypes = JSON.parse(fileContent);
+
+  filePath = path.resolve(__dirname, "../planetData/planetNamePrefixes.json");
+  fileContent = fs.readFileSync(filePath, "utf8");
+  prefixes = JSON.parse(fileContent);
+
+  filePath = path.resolve(__dirname, "../planetData/planetNameSuffixes.json");
+  fileContent = fs.readFileSync(filePath, "utf8");
+  suffixes = JSON.parse(fileContent);
+
+  filePath = path.resolve(__dirname, "../planetData/planetBiomes.json");
+  fileContent = fs.readFileSync(filePath, "utf8");
+  biomes = JSON.parse(fileContent);
+
+  filePath = path.resolve(__dirname, "../planetData/planetSpecies.json");
+  fileContent = fs.readFileSync(filePath, "utf8");
+  species = JSON.parse(fileContent);
 } catch (err) {
-  console.error("Failed to read or parse planetTypes.json", err.message);
+  console.error("Failed to read or parse json files", err.message);
   console.error(
     "The error occurred while reading or parsing this content:",
     fileContent
@@ -50,9 +66,43 @@ function getTemperatureForPlanetType(type) {
   return parseFloat(temperature.toFixed(2));
 }
 
+// Function to generate a random name for a planet
+function generatePlanetName() {
+  return getRandomElement(prefixes) + getRandomElement(suffixes);
+}
+
+// Function to get a random biome for a planet
+function getRandomBiome() {
+  return getRandomElement(biomes);
+}
+
+// Function to get a random species for a planet
+function getRandomSpecies() {
+  return getRandomElement(species);
+}
+
+// Function to get a random age for a planet in billions of years
+function getRandomAge() {
+  return parseFloat((Math.random() * 10).toFixed(2));
+}
+
+function getRandomDistance() {
+  // The distance from the Earth to the Sun is 1 AU
+  // Multiply it by 3 for a more realistic distance
+  const maxDistanceInAU = 1 * 3;
+  return parseFloat((Math.random() * maxDistanceInAU).toFixed(2));
+}
+
+// Function to get a random orbital period in Earth years
+function calculateOrbitalPeriod(distanceInAU) {
+  // Using Kepler's third law
+  const orbitalPeriod = Math.sqrt(Math.pow(distanceInAU, 3));
+  return parseFloat(orbitalPeriod.toFixed(2));
+}
+
 // Function to generate a new planet
 function generatePlanet() {
-  const name = `Planet-${Math.floor(Math.random() * 10000)}`;
+  const name = generatePlanetName();
   const type = getRandomElement(planetTypes);
   const size = getRandomElement([1000, 2000, 3000, 4000]);
   const temperature = getTemperatureForPlanetType(type); // Use the new function for temperature
@@ -61,6 +111,13 @@ function generatePlanet() {
   const event = getRandomElement(events);
   const perfectness =
     type.perfectness + resource.perfectness + event.perfectness;
+
+  // New features
+  const biome = getRandomBiome();
+  const species = getRandomSpecies();
+  const age = getRandomAge();
+  const distance = getRandomDistance();
+  const orbital_period = calculateOrbitalPeriod(distance);
 
   return {
     name,
@@ -71,6 +128,12 @@ function generatePlanet() {
     resource: resource.name,
     event: event.name,
     perfectness,
+    // New features
+    biome,
+    species,
+    age,
+    distance: distance + " AU",
+    orbital_period,
   };
 }
 

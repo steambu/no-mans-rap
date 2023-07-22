@@ -56,8 +56,10 @@ router.post("/", (req, res) => {
             res.redirect("/discover");
           } else {
             const newPlanet = planetGenerator();
+            console.log(newPlanet);
+
             db.run(
-              "INSERT INTO planets (name, type, size, temperature, gravity, perfectness) VALUES (?, ?, ?, ?, ?, ?)",
+              "INSERT INTO planets (name, type, size, temperature, gravity, perfectness, biome, species, age, distance, orbital_period) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
               [
                 newPlanet.name,
                 newPlanet.type,
@@ -65,6 +67,11 @@ router.post("/", (req, res) => {
                 newPlanet.temperature,
                 newPlanet.gravity,
                 newPlanet.perfectness,
+                newPlanet.biome,
+                newPlanet.species,
+                newPlanet.age,
+                newPlanet.distance,
+                newPlanet.orbital_period,
               ],
               function(err) {
                 if (err) {

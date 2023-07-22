@@ -62,8 +62,6 @@ let createActivitiesTable = () => {
   });
 };
 
-// Create Planets Table
-
 let createPlanetsTable = () => {
   const query = `
     CREATE TABLE IF NOT EXISTS planets (
@@ -71,9 +69,14 @@ let createPlanetsTable = () => {
       name TEXT NOT NULL,
       type TEXT NOT NULL,
       size INTEGER NOT NULL,
-      temperature INTEGER NOT NULL,
+      temperature REAL NOT NULL,
       gravity REAL NOT NULL,
       perfectness REAL NOT NULL,
+      biome TEXT NOT NULL,
+      species TEXT NOT NULL,
+      age REAL NOT NULL,
+      distance REAL NOT NULL,
+      orbital_period INTEGER NOT NULL DEFAULT 0,
       discovered_on TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     )
   `;
