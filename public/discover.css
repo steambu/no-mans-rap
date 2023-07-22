@@ -1,8 +1,14 @@
+/* body {
+  padding: 0;
+  margin: 0;
+  font-family: Arial, sans-serif;
+  color: #333;
+} */
+
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  grid-template-columns: repeat(3, 1fr); /* Display three cards per row */
   gap: 20px;
-  justify-items: center;
   padding: 20px;
 }
 
@@ -16,7 +22,67 @@
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+.card h3 {
+  background-color: #4caf50;
+  color: white;
+  text-align: center;
+  padding: 10px;
+  border-radius: 5px;
+}
+
 .card p {
   margin: 0 0 10px;
   line-height: 1.5;
+}
+
+.bar {
+  background-color: #f2f2f2;
+  padding: 10px;
+  margin: 10px 0;
+  text-align: center;
+  border-radius: 5px;
+}
+
+.content-section {
+  margin: 10px 0;
+}
+
+.perfectness {
+  background-color: #ffd700;
+  padding: 10px;
+  text-align: center;
+  border-radius: 5px;
+}
+
+/* other styles remain the same */
+
+.type-bar {
+  background-color: #f2f2f2;
+  padding: 10px;
+  margin: 10px 0;
+  text-align: center;
+  border-radius: 5px;
+}
+
+.planet-info {
+  margin: 10px 0;
+}
+
+.species-info {
+  margin: 10px 0;
+  background-color: #e6f2ff;
+  padding: 10px;
+}
+
+.resources-info {
+  margin: 10px 0;
+  background-color: #fff0f5;
+  padding: 10px;
+}
+
+.perfectness-bar {
+  background-color: #ffd700;
+  padding: 10px;
+  text-align: center;
+  border-radius: 5px;
 }

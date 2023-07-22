@@ -66,9 +66,92 @@ function getTemperatureForPlanetType(type) {
   return parseFloat(temperature.toFixed(2));
 }
 
+// Helper function to generate a random number within a given range
+function getRandomNumber(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+// Helper function to convert a number to a Roman numeral
+function convertToRomanNumeral(num) {
+  const romanNumerals = {
+    M: 1000,
+    CM: 900,
+    D: 500,
+    CD: 400,
+    C: 100,
+    XC: 90,
+    L: 50,
+    XL: 40,
+    X: 10,
+    IX: 9,
+    V: 5,
+    IV: 4,
+    I: 1,
+  };
+
+  let roman = "";
+
+  for (let key in romanNumerals) {
+    while (num >= romanNumerals[key]) {
+      roman += key;
+      num -= romanNumerals[key];
+    }
+  }
+
+  return roman;
+}
+
 // Function to generate a random name for a planet
 function generatePlanetName() {
-  return getRandomElement(prefixes) + getRandomElement(suffixes);
+  // Start with a base name
+  let planetName = getRandomElement(prefixes) + getRandomElement(suffixes);
+
+  // Determine a random 'flavor' to add to the name
+  let flavor = getRandomNumber(1, 4);
+
+  switch (flavor) {
+    case 1:
+      // Add a number suffix
+      planetName += " " + getRandomNumber(1, 9999);
+      break;
+    case 2:
+      // Add a Roman numeral suffix
+      planetName += " " + convertToRomanNumeral(getRandomNumber(1, 50));
+      break;
+    case 3:
+      // Add a middle name
+      let prefixMiddle =
+        getRandomElement(prefixes).charAt(0) +
+        getRandomElement(prefixes)
+          .slice(1)
+          .toLowerCase();
+      let suffixMiddle =
+        getRandomElement(suffixes).charAt(0) +
+        getRandomElement(suffixes)
+          .slice(1)
+          .toLowerCase();
+
+      planetName =
+        planetName.charAt(0).toUpperCase() +
+        planetName.slice(1, planetName.length / 2).toLowerCase() +
+        " " +
+        prefixMiddle +
+        suffixMiddle +
+        " " +
+        planetName
+          .slice(planetName.length / 2)
+          .charAt(0)
+          .toUpperCase() +
+        planetName.slice(planetName.length / 2 + 1).toLowerCase();
+      break;
+
+    case 4:
+      // Add a number prefix
+      planetName = getRandomNumber(1, 9999) + " " + planetName;
+      break;
+  }
+
+  return planetName;
 }
 
 // Function to get a random biome for a planet
@@ -125,7 +208,10 @@ function generatePlanet() {
     size,
     temperature,
     gravity,
-    resource: resource.name,
+    resource: {
+      name: resource.name,
+      imageURL: resource.imageURL,
+    },
     event: event.name,
     perfectness,
     // New features

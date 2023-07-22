@@ -22,7 +22,10 @@ my-space-game
 │  ├─ discover.css
 │  ├─ header.css
 │  ├─ images
-│  │  └─ Tudormorari_a_hyperealistic_pixelated_version_of_the_planet_ura_3c9296de-de79-49f4-8b91-126b8f10fde7.png
+│  │  ├─ events
+│  │  └─ resources
+│  │     ├─ resource_celestial_cherry.png
+│  │     └─ resource_ferrite_dust.png
 │  └─ log.css
 ├─ routes
 │  ├─ activities.js
