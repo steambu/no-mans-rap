@@ -2,6 +2,7 @@ var express = require("express");
 var router = express.Router();
 const { db, getRapScore } = require("../database.js");
 
+// Helper function to get a planet based on the provided SQL query
 function getPlanet(query) {
   return new Promise((resolve, reject) => {
     db.get(query, (err, row) => {
@@ -19,20 +20,52 @@ router.get("/", async (req, res) => {
     // Get the RAP score
     let rap = await getRapScore("player");
 
-    // Get the planets with the minimum temperature, maximum temperature, and maximum size
     let coldestPlanet = await getPlanet(
-      "SELECT * FROM planets ORDER BY temperature ASC LIMIT 1"
+      `SELECT 
+        planets.*, 
+        planet_resources.resource AS resource, 
+        planet_events.event AS event 
+       FROM 
+        planets 
+       LEFT JOIN 
+        planet_resources ON planets.id = planet_resources.planet_id
+       LEFT JOIN 
+        planet_events ON planets.id = planet_events.planet_id
+       ORDER BY 
+        temperature ASC LIMIT 1`
     );
 
     let hottestPlanet = await getPlanet(
-      "SELECT * FROM planets ORDER BY temperature DESC LIMIT 1"
+      `SELECT 
+        planets.*, 
+        planet_resources.resource AS resource, 
+        planet_events.event AS event 
+       FROM 
+        planets 
+       LEFT JOIN 
+        planet_resources ON planets.id = planet_resources.planet_id
+       LEFT JOIN 
+        planet_events ON planets.id = planet_events.planet_id
+       ORDER BY 
+        temperature DESC LIMIT 1`
     );
 
     let biggestPlanet = await getPlanet(
-      "SELECT * FROM planets ORDER BY size DESC LIMIT 1"
+      `SELECT 
+        planets.*, 
+        planet_resources.resource AS resource, 
+        planet_events.event AS event 
+       FROM 
+        planets 
+       LEFT JOIN 
+        planet_resources ON planets.id = planet_resources.planet_id
+       LEFT JOIN 
+        planet_events ON planets.id = planet_events.planet_id
+       ORDER BY 
+        size DESC LIMIT 1`
     );
 
-    // Render the log page
+    // Include the RAP score in the data sent to the render function
     res.render("log", { coldestPlanet, hottestPlanet, biggestPlanet, rap });
   } catch (err) {
     console.error(err.message);

@@ -1,29 +1,10 @@
-.card {
-  background: white;
-  border-radius: 2px;
-  display: inline-block;
-  height: 300px;
-  margin: 1rem;
-  position: relative;
-  width: 300px;
-  box-shadow: 0 19px 38px rgba(0, 0, 0, 0.1), 0 15px 12px rgba(0, 0, 0, 0.1);
+.planet-grid {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
 }
 
-.card-content {
-  padding: 20px;
-}
-
-h1 {
-  color: #333;
-  text-align: center;
-  margin-bottom: 20px;
-}
-
-h2 {
-  color: #555;
-  margin-bottom: 10px;
-}
-
-p {
-  color: #777;
+.planet-grid > div {
+  flex-basis: calc(33% - 20px); /* subtracting for margins */
+  margin: 10px;
 }

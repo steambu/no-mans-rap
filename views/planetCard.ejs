@@ -1,0 +1,32 @@
+<link rel="stylesheet" href="/planetCard.css">
+
+<div class="card">
+  <h3>
+    <%= planet.name %>
+  </h3>
+  <div class="type-bar">Type: <%= planet.type %>
+  </div>
+  <div class="planet-info">
+    <p>Size: <%= planet.size %> km</p>
+    <p>Temperature: <%= planet.temperature %>°C</p>
+    <p>Gravity: <%= planet.gravity %> G</p>
+    <p>Biome: <%= planet.biome %>
+    </p>
+    <p>Age: <%= planet.age %> billion years</p>
+    <p>Distance: <%= planet.distance %> light years</p>
+    <p>Orbital Period: <%= planet.orbital_period %> days</p>
+  </div>
+  <div class="species-info">
+    <p>Species: <%= planet.species %>
+    </p>
+  </div>
+  <div class="resources-info">
+    <p>Resource: <%= planet.resource.name %>
+    </p>
+    <img src="<%= planet.resource.imageURL %>" alt="<%= planet.resource.name %>">
+    <p>Event: <%= planet.event %>
+    </p>
+  </div>
+  <div class="perfectness-bar">Perfectness: <%= planet.perfectness %>
+  </div>
+</div>

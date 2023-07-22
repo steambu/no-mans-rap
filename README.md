@@ -6,6 +6,7 @@ my-space-game
 ├─ FileStructure.md
 ├─ manual.txt
 ├─ myDatabase.db
+├─ myDatabase.js
 ├─ package-lock.json
 ├─ package.json
 ├─ planetData
@@ -19,14 +20,14 @@ my-space-game
 │  └─ planetTypesPrototype.json
 ├─ public
 │  ├─ activities.css
-│  ├─ discover.css
 │  ├─ header.css
 │  ├─ images
 │  │  ├─ events
 │  │  └─ resources
 │  │     ├─ resource_celestial_cherry.png
 │  │     └─ resource_ferrite_dust.png
-│  └─ log.css
+│  ├─ log.css
+│  └─ planetCard.css
 ├─ routes
 │  ├─ activities.js
 │  ├─ discover.js
@@ -38,6 +39,7 @@ my-space-game
    ├─ discover.ejs
    ├─ header.ejs
    ├─ index.ejs
-   └─ log.ejs
+   ├─ log.ejs
+   └─ planetCard.ejs
 
 ```

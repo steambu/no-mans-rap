@@ -29,6 +29,11 @@ router.get("/", (req, res) => {
           return console.error(err.message);
         }
 
+        planets.forEach((planet) => {
+          console.log("Before parsing: ", planet.resource);
+          planet.resource = JSON.parse(planet.resource);
+        });
+
         res.render("discover", { rap: row.rap, planets: planets });
       }
     );
@@ -83,13 +88,15 @@ router.post("/", (req, res) => {
                 // insert planet's resource
                 db.run(
                   "INSERT INTO planet_resources (planet_id, resource) VALUES (?, ?)",
-                  [planetId, newPlanet.resource],
+                  [planetId, JSON.stringify(newPlanet.resource)], // Convert the resource object to a JSON string before inserting
                   function(err) {
                     if (err) {
                       return console.error(err.message);
                     }
 
                     // insert planet's event
+                    console.log("Before insertion: ", newPlanet.resource);
+
                     db.run(
                       "INSERT INTO planet_events (planet_id, event) VALUES (?, ?)",
                       [planetId, newPlanet.event],
