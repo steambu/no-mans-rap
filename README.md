@@ -23,8 +23,11 @@ my-space-game
 │  ├─ images
 │  │  ├─ events
 │  │  └─ resources
-│  │     ├─ celestial_cherry.png
-│  │     └─ ferrite_dust.png
+│  │     ├─ cobalt.png
+│  │     ├─ ferrite_dust.png
+│  │     ├─ gold.png
+│  │     ├─ silver.png
+│  │     └─ sulphur.png
 │  ├─ log.css
 │  └─ planetCard.css
 ├─ routes

@@ -4,5 +4,29 @@
     "resource_image_url": "/images/resources/ferrite_dust.png",
     "perfectness": 1,
     "rarity": 1000
+  },
+  {
+    "name": "Sulphur",
+    "resource_image_url": "/images/resources/sulphur.png",
+    "perfectness": 3,
+    "rarity": 750
+  },
+  {
+    "name": "Gold",
+    "resource_image_url": "/images/resources/gold.png",
+    "perfectness": 5,
+    "rarity": 500
+  },
+  {
+    "name": "Cobalt",
+    "resource_image_url": "/images/resources/cobalt.png",
+    "perfectness": 5,
+    "rarity": 400
+  },
+  {
+    "name": "Silver",
+    "resource_image_url": "/images/resources/silver.png",
+    "perfectness": 3,
+    "rarity": 650
   }
 ]

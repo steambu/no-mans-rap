@@ -18,13 +18,15 @@
     <% if (planets.length> 0) { %>
       <h2>Discovered Planets</h2>
       <div class="grid">
-        <% planets.forEach(planet=> { %>
+        console.log(planets)
+        <% [...planets].reverse().forEach(planet=> { %>
           <%- include('planetCard', {planet: planet}) %>
             <% }) %>
       </div>
       <% } else { %>
         <p>No planets discovered yet.</p>
         <% } %>
+
 </body>
 
 </html>

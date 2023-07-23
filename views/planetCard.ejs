@@ -13,7 +13,7 @@
     <p>Biome: <%= planet.biome %>
     </p>
     <p>Age: <%= planet.age %> billion years</p>
-    <p>Distance: <%= planet.distance %> light years</p>
+    <p>Distance: <%= planet.distance %>k units</p>
     <p>Orbital Period: <%= planet.orbital_period %> days</p>
   </div>
   <div class="species-info">
@@ -21,12 +21,16 @@
     </p>
   </div>
   <div class="resources-info">
-    <p>Resource: <%= planet.resource.name %>
-    </p>
-
-    <img class="resource-image" src="<%= planet.resource.imageURL %>" alt="<%= planet.resource.name %>">
-
-
+    <div class="resources-container">
+      <% planet.resources.forEach(resource=> { %>
+        <div class="resource">
+          <img class="resource-image" src="<%= resource.imageURL %>" alt="<%= resource.name %>">
+          <p class="resource-name">
+            <%= resource.name %>
+          </p>
+        </div>
+        <% }) %>
+    </div>
     <p>Event: <%= planet.event %>
     </p>
   </div>

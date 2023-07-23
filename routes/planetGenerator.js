@@ -42,10 +42,47 @@ const events = JSON.parse(
 );
 
 // PLANET GENERATION
-
 // Function to generate a new planet
+
+// Helper function to get a random element from an array
 function getRandomElement(arr) {
   return arr[Math.floor(Math.random() * arr.length)];
+}
+
+// HELPER FOR RESOURCES AND EVENTS
+// Helper function to get a weighted random element from an array based on the rarity, excluding specific elements
+function getWeightedRandomElement(arr, exclude = []) {
+  const availableResources = arr.filter((item) => !exclude.includes(item));
+  const totalSum = availableResources.reduce(
+    (total, item) => total + item.rarity,
+    0
+  );
+  let threshold = Math.random() * totalSum;
+
+  for (let i = 0; i < availableResources.length; i++) {
+    threshold -= availableResources[i].rarity;
+    if (threshold < 0) return availableResources[i];
+  }
+
+  return availableResources[availableResources.length - 1]; // fallback, shouldn't happen
+}
+
+// Function to get multiple unique resources considering their rarity
+function getMultipleResources(min, max) {
+  const count = getRandomNumber(min, max);
+  const selectedResources = [];
+  let perfectnessResources = 0; // Initialize perfectnessResources here
+
+  for (let i = 0; i < count; i++) {
+    const resource = getWeightedRandomElement(resources, selectedResources);
+    selectedResources.push(resource);
+    perfectnessResources += resource.perfectness; // Increment perfectnessResources here
+  }
+
+  return {
+    selectedResources,
+    perfectnessResources,
+  };
 }
 
 // Function to get a temperature for a planet type based on normal distribution within its temperature range
@@ -190,10 +227,17 @@ function generatePlanet() {
   const size = getRandomElement([1000, 2000, 3000, 4000]);
   const temperature = getTemperatureForPlanetType(type); // Use the new function for temperature
   const gravity = getRandomElement([0.5, 1, 1.5, 2]);
-  const resource = getRandomElement(resources);
-  const event = getRandomElement(events);
+
+  // Get multiple resources and perfectnessResources
+  const {
+    selectedResources: resourceArray,
+    perfectnessResources,
+  } = getMultipleResources(2, 5);
+
+  const event = getRandomElement(events); // Define event here
+
   const perfectness =
-    type.perfectness + resource.perfectness + event.perfectness;
+    type.perfectness + perfectnessResources + event.perfectness;
 
   // New features
   const biome = getRandomBiome();
@@ -208,13 +252,12 @@ function generatePlanet() {
     size,
     temperature,
     gravity,
-    resource: {
+    resources: resourceArray.map((resource) => ({
       name: resource.name,
       imageURL: resource.resource_image_url,
-    },
+    })),
     event: event.name,
     perfectness,
-    // New features
     biome,
     species,
     age,

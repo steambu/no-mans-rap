@@ -25,19 +25,47 @@ router.get("/", (req, res) => {
         planet_events ON planets.id = planet_events.planet_id
     `,
       [],
-      (err, planets) => {
+      (err, rows) => {
         if (err) {
           return console.error(err.message);
         }
 
-        planets.forEach((planet) => {
-          planet.resource = {
-            name: planet.resource_name,
-            imageURL: planet.resource_image_url,
-          };
-          delete planet.resource_name;
-          delete planet.resource_imageURL;
+        // BEGIN - New block of code replacing the original processing.
+        let planets = [];
+
+        rows.forEach((row) => {
+          // Find the planet in the planets array
+          let planet = planets.find((planet) => planet.id === row.id);
+
+          // If the planet does not exist, create it
+          // If the planet does not exist, create it
+          if (!planet) {
+            planet = {
+              id: row.id,
+              name: row.name,
+              type: row.type,
+              size: row.size,
+              temperature: row.temperature,
+              gravity: row.gravity,
+              age: row.age,
+              biome: row.biome,
+              species: row.species,
+              perfectness: row.perfectness,
+              distance: row.distance,
+              orbital_period: row.orbital_period,
+              resources: [],
+              event: row.event,
+            };
+            planets.push(planet);
+          }
+
+          // Add the resource to the planet
+          planet.resources.push({
+            name: row.resource_name,
+            imageURL: row.resource_image_url,
+          });
         });
+        // END - New block of code.
 
         res.render("discover", { rap: row.rap, planets: planets });
       }
@@ -66,7 +94,6 @@ router.post("/", (req, res) => {
             res.redirect("/discover");
           } else {
             const newPlanet = planetGenerator();
-            console.log(newPlanet);
 
             db.run(
               "INSERT INTO planets (name, type, size, temperature, gravity, perfectness, biome, species, age, distance, orbital_period) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
@@ -90,33 +117,29 @@ router.post("/", (req, res) => {
 
                 const planetId = this.lastID;
 
-                // insert planet's resource
+                // insert all of planet's resources
+                newPlanet.resources.forEach((resource) => {
+                  db.run(
+                    "INSERT INTO planet_resources (planet_id, resource_name, resource_image_url) VALUES (?, ?, ?)",
+                    [planetId, resource.name, resource.imageURL],
+                    function(err) {
+                      if (err) {
+                        return console.error(err.message);
+                      }
+                    }
+                  );
+                });
+
+                // insert planet's event
                 db.run(
-                  "INSERT INTO planet_resources (planet_id, resource_name, resource_image_url) VALUES (?, ?, ?)",
-                  [
-                    planetId,
-                    newPlanet.resource.name,
-                    newPlanet.resource.imageURL,
-                  ],
+                  "INSERT INTO planet_events (planet_id, event) VALUES (?, ?)",
+                  [planetId, newPlanet.event],
                   function(err) {
                     if (err) {
                       return console.error(err.message);
                     }
 
-                    // insert planet's event
-                    console.log("Before insertion: ", newPlanet.resource);
-
-                    db.run(
-                      "INSERT INTO planet_events (planet_id, event) VALUES (?, ?)",
-                      [planetId, newPlanet.event],
-                      function(err) {
-                        if (err) {
-                          return console.error(err.message);
-                        }
-
-                        res.redirect("/discover");
-                      }
-                    );
+                    res.redirect("/discover");
                   }
                 );
               }

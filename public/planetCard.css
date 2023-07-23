@@ -45,10 +45,29 @@
   padding: 10px;
 }
 
+.resources-info .resource {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-right: 10px;
+}
+
+.resources-info .resources-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
 .resource-image {
-  max-width: 100%;
-  max-height: 64px; /* Adjust this value as needed */
+  max-width: 100px;
+  max-height: 64px;
   height: auto;
+}
+
+.resource-name {
+  text-align: center;
 }
 
 .perfectness-bar {
