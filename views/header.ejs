@@ -7,6 +7,11 @@
     <a href="/discover">Discover</a> |
     <a href="/log">Log</a> |
   </div>
-  <h3 id="rapScore">RAP: <%= rap.toLocaleString() %>
+  <h3 id="rapScore">
+    <% if (typeof rap !=='undefined' ) { %>
+      RAP: <%= rap.toLocaleString() %>
+        <% } else { %>
+          RAP: N/A
+          <% } %>
   </h3>
 </nav>

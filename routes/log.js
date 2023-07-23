@@ -8,6 +8,8 @@ function getPlanet(query) {
     db.get(query, (err, row) => {
       if (err) {
         reject(err);
+      } else if (row === undefined) {
+        reject(new Error("No planet found for the provided query."));
       } else {
         resolve(row);
       }
@@ -34,7 +36,6 @@ router.get("/", async (req, res) => {
        ORDER BY 
         temperature ASC LIMIT 1`
     );
-
     let hottestPlanet = await getPlanet(
       `SELECT 
         planets.*, 
@@ -49,7 +50,6 @@ router.get("/", async (req, res) => {
        ORDER BY 
         temperature DESC LIMIT 1`
     );
-
     let biggestPlanet = await getPlanet(
       `SELECT 
         planets.*, 
@@ -67,8 +67,11 @@ router.get("/", async (req, res) => {
 
     // Include the RAP score in the data sent to the render function
     res.render("log", { coldestPlanet, hottestPlanet, biggestPlanet, rap });
-  } catch (err) {
-    console.error(err.message);
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).render("error", {
+      message: "There was an error retrieving planet data.",
+    });
   }
 });
 
