@@ -1,7 +1,8 @@
 [
   {
     "name": "Ferrite Dust",
+    "resource_image_url": "/images/resources/ferrite_dust.png",
     "perfectness": 1,
-    "filePath": "/images/resources/ferrite_dust.png"
+    "rarity": 1000
   }
 ]

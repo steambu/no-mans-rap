@@ -14,7 +14,8 @@ router.get("/", (req, res) => {
       `
       SELECT 
         planets.*, 
-        planet_resources.resource, 
+        planet_resources.resource_name, 
+        planet_resources.resource_image_url, 
         planet_events.event 
       FROM 
         planets 
@@ -30,8 +31,12 @@ router.get("/", (req, res) => {
         }
 
         planets.forEach((planet) => {
-          console.log("Before parsing: ", planet.resource);
-          planet.resource = JSON.parse(planet.resource);
+          planet.resource = {
+            name: planet.resource_name,
+            imageURL: planet.resource_image_url,
+          };
+          delete planet.resource_name;
+          delete planet.resource_imageURL;
         });
 
         res.render("discover", { rap: row.rap, planets: planets });
@@ -87,8 +92,12 @@ router.post("/", (req, res) => {
 
                 // insert planet's resource
                 db.run(
-                  "INSERT INTO planet_resources (planet_id, resource) VALUES (?, ?)",
-                  [planetId, JSON.stringify(newPlanet.resource)], // Convert the resource object to a JSON string before inserting
+                  "INSERT INTO planet_resources (planet_id, resource_name, resource_image_url) VALUES (?, ?, ?)",
+                  [
+                    planetId,
+                    newPlanet.resource.name,
+                    newPlanet.resource.imageURL,
+                  ],
                   function(err) {
                     if (err) {
                       return console.error(err.message);

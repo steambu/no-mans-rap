@@ -210,7 +210,7 @@ function generatePlanet() {
     gravity,
     resource: {
       name: resource.name,
-      imageURL: resource.imageURL,
+      imageURL: resource.resource_image_url,
     },
     event: event.name,
     perfectness,

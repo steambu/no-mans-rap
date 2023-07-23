@@ -6,7 +6,6 @@ my-space-game
 ├─ FileStructure.md
 ├─ manual.txt
 ├─ myDatabase.db
-├─ myDatabase.js
 ├─ package-lock.json
 ├─ package.json
 ├─ planetData
@@ -24,8 +23,8 @@ my-space-game
 │  ├─ images
 │  │  ├─ events
 │  │  └─ resources
-│  │     ├─ resource_celestial_cherry.png
-│  │     └─ resource_ferrite_dust.png
+│  │     ├─ celestial_cherry.png
+│  │     └─ ferrite_dust.png
 │  ├─ log.css
 │  └─ planetCard.css
 ├─ routes
@@ -37,6 +36,7 @@ my-space-game
 └─ views
    ├─ activities.ejs
    ├─ discover.ejs
+   ├─ error.ejs
    ├─ header.ejs
    ├─ index.ejs
    ├─ log.ejs

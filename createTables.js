@@ -99,7 +99,9 @@ let createPlanetResourcesTable = () => {
     CREATE TABLE IF NOT EXISTS planet_resources (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       planet_id INTEGER,
-      resource TEXT NOT NULL,
+      resource_name TEXT NOT NULL,
+      resource_perfectness INTEGER,
+      resource_image_url TEXT NOT NULL,
       FOREIGN KEY (planet_id) REFERENCES planets (id)
     )
   `;
@@ -107,10 +109,10 @@ let createPlanetResourcesTable = () => {
   return new Promise((resolve, reject) => {
     db.run(query, (err) => {
       if (err) {
-        console.log("Error creating planets table", err);
+        console.log("Error creating planet_resources table", err);
         reject(err);
       } else {
-        console.log("Successfully created Planet Resources table");
+        console.log("Successfully created planet_resources table");
         resolve(true);
       }
     });

@@ -25,7 +25,7 @@ router.get("/", async (req, res) => {
     let coldestPlanet = await getPlanet(
       `SELECT 
         planets.*, 
-        planet_resources.resource AS resource, 
+        planet_resources.resource_name AS resource, 
         planet_events.event AS event 
        FROM 
         planets 
@@ -39,7 +39,7 @@ router.get("/", async (req, res) => {
     let hottestPlanet = await getPlanet(
       `SELECT 
         planets.*, 
-        planet_resources.resource AS resource, 
+        planet_resources.resource_name AS resource, 
         planet_events.event AS event 
        FROM 
         planets 
@@ -53,7 +53,7 @@ router.get("/", async (req, res) => {
     let biggestPlanet = await getPlanet(
       `SELECT 
         planets.*, 
-        planet_resources.resource AS resource, 
+        planet_resources.resource_name AS resource, 
         planet_events.event AS event 
        FROM 
         planets 
