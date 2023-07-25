@@ -13,31 +13,28 @@ router.get("/", (req, res) => {
     db.all(
       `
       SELECT 
-        planets.*, 
+        subplanets.*, 
         planet_resources.resource_name, 
         planet_resources.resource_image_url, 
         planet_events.event 
       FROM 
-        planets 
+        (SELECT * FROM planets ORDER BY discovered_on DESC LIMIT 5) AS subplanets
       LEFT JOIN 
-        planet_resources ON planets.id = planet_resources.planet_id
+        planet_resources ON subplanets.id = planet_resources.planet_id
       LEFT JOIN 
-        planet_events ON planets.id = planet_events.planet_id
+        planet_events ON subplanets.id = planet_events.planet_id
     `,
       [],
       (err, rows) => {
         if (err) {
           return console.error(err.message);
         }
-
-        // BEGIN - New block of code replacing the original processing.
         let planets = [];
 
         rows.forEach((row) => {
           // Find the planet in the planets array
           let planet = planets.find((planet) => planet.id === row.id);
 
-          // If the planet does not exist, create it
           // If the planet does not exist, create it
           if (!planet) {
             planet = {
@@ -65,7 +62,6 @@ router.get("/", (req, res) => {
             imageURL: row.resource_image_url,
           });
         });
-        // END - New block of code.
 
         res.render("discover", { rap: row.rap, planets: planets });
       }
@@ -117,31 +113,45 @@ router.post("/", (req, res) => {
 
                 const planetId = this.lastID;
 
-                // insert all of planet's resources
-                newPlanet.resources.forEach((resource) => {
+                const insertResourcePromises = newPlanet.resources.map(
+                  (resource) => {
+                    return new Promise((resolve, reject) => {
+                      db.run(
+                        "INSERT INTO planet_resources (planet_id, resource_name, resource_image_url) VALUES (?, ?, ?)",
+                        [planetId, resource.name, resource.imageURL],
+                        function(err) {
+                          if (err) {
+                            reject(err.message);
+                          } else {
+                            resolve();
+                          }
+                        }
+                      );
+                    });
+                  }
+                );
+
+                const insertEventPromise = new Promise((resolve, reject) => {
                   db.run(
-                    "INSERT INTO planet_resources (planet_id, resource_name, resource_image_url) VALUES (?, ?, ?)",
-                    [planetId, resource.name, resource.imageURL],
+                    "INSERT INTO planet_events (planet_id, event) VALUES (?, ?)",
+                    [planetId, newPlanet.event],
                     function(err) {
                       if (err) {
-                        return console.error(err.message);
+                        reject(err.message);
+                      } else {
+                        resolve();
                       }
                     }
                   );
                 });
 
-                // insert planet's event
-                db.run(
-                  "INSERT INTO planet_events (planet_id, event) VALUES (?, ?)",
-                  [planetId, newPlanet.event],
-                  function(err) {
-                    if (err) {
-                      return console.error(err.message);
-                    }
-
+                Promise.all([...insertResourcePromises, insertEventPromise])
+                  .then(() => {
                     res.redirect("/discover");
-                  }
-                );
+                  })
+                  .catch((err) => {
+                    console.error(err);
+                  });
               }
             );
           }

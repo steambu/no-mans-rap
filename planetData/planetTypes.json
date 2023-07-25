@@ -3,9 +3,64 @@
     "name": "Gas Giant",
     "perfectness": 0,
     "temperatureRange": {
-    "min": -200,
-    "max": -100
-  }
+      "min": -200,
+      "max": -100
+    }
+  },
+  {
+    "name": "Terrestrial",
+    "perfectness": 0,
+    "temperatureRange": {
+      "min": -150,
+      "max": 150
+    }
+  },
+  {
+    "name": "Frozen Wasteland",
+    "perfectness": 0,
+    "temperatureRange": {
+      "min": -250,
+      "max": -100
+    }
+  },
+  {
+    "name": "Lush Jungle",
+    "perfectness": 0,
+    "temperatureRange": {
+      "min": 20,
+      "max": 35
+    }
+  },
+  {
+    "name": "Volcanic",
+    "perfectness": 0,
+    "temperatureRange": {
+      "min": 300,
+      "max": 600
+    }
+  },
+  {
+    "name": "Barren Desert",
+    "perfectness": 0,
+    "temperatureRange": {
+      "min": 100,
+      "max": 200
+    }
+  },
+  {
+    "name": "Oceanic",
+    "perfectness": 0,
+    "temperatureRange": {
+      "min": -50,
+      "max": 30
+    }
+  },
+  {
+    "name": "Aerial Skylands",
+    "perfectness": 0,
+    "temperatureRange": {
+      "min": -100,
+      "max": -50
+    }
   }
 ]
- 
